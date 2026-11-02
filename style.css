@@ -1,0 +1,109 @@
+/* ---------- Base styles ---------- */
+* {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: system-ui, sans-serif;
+  background-color: #f0f6f8;
+  color: #1f2d3a;
+  line-height: 1.5;
+  margin: 0;
+  padding: 24px 16px;
+}
+
+/* ---------- Page layout ---------- */
+header,
+main,
+footer {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+header {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+h1 {
+  color: #0b6e7f;
+  margin-bottom: 8px;
+}
+
+main {
+  background-color: white;
+  padding: 24px;
+  border-radius: 12px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.08);
+}
+
+footer {
+  text-align: center;
+  font-size: 0.9rem;
+  color: #5b6b7a;
+  margin-top: 24px;
+}
+
+/* ---------- Form ---------- */
+.form-group {
+  margin-bottom: 24px;
+  border: none;
+  padding: 0;
+}
+
+label,
+legend {
+  font-weight: 600;
+  display: block;
+  margin-bottom: 8px;
+}
+
+/* Radio labels sit on one line next to their buttons */
+fieldset label {
+  display: inline;
+  font-weight: normal;
+  margin-right: 16px;
+}
+
+input[type="radio"] {
+  margin-right: 4px;
+}
+
+select,
+textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 1rem;
+  font-family: inherit;
+  border: 1px solid #c3d0d8;
+  border-radius: 8px;
+}
+
+select:focus,
+textarea:focus {
+  outline: 2px solid #0b6e7f;
+  border-color: #0b6e7f;
+}
+
+#comments-note {
+  font-size: 0.85rem;
+  color: #5b6b7a;
+  margin: 6px 0 0;
+}
+
+/* ---------- Button ---------- */
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #0b6e7f;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+button:hover {
+  background-color: #095866;
+}
