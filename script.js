@@ -1,23 +1,60 @@
-// 1. Find the elements we need on the page
+// 1. Connect to Supabase (paste your own values between the quotes)
+const SUPABASE_URL = "https://vyyunthmzdpzveizboxz.supabase.co";
+const SUPABASE_ANON_KEY = "sb_publishable_k7RCfRLbY5qKUmW33H62iA_L-3UWpHh";
+
+const db = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// 2. Find the elements we need on the page
 const form = document.getElementById("survey-form");
 const message = document.getElementById("form-message");
+const providerSelect = document.getElementById("provider");
 
-// 2. Run this code whenever the form is submitted
-form.addEventListener("submit", function (event) {
-  // Stop the browser from reloading the page
+// 3. Load the provider list from the database into the dropdown
+async function loadProviders() {
+  const { data, error } = await db
+    .from("providers")
+    .select("id, name, role")
+    .order("name");
+
+  if (error) {
+    console.error(error);
+    message.textContent = "Could not load providers. Please refresh the page.";
+    return;
+  }
+
+  data.forEach(function (provider) {
+    const option = document.createElement("option");
+    option.value = provider.id;
+    option.textContent = provider.role + " " + provider.name;
+    providerSelect.appendChild(option);
+  });
+}
+
+loadProviders();
+
+// 4. Save the response when the form is submitted
+form.addEventListener("submit", async function (event) {
   event.preventDefault();
 
-  // 3. Read the answers, using each field's name
+  const submitButton = form.querySelector("button[type='submit']");
+  submitButton.disabled = true;
+  message.textContent = "";
+
   const surveyResponse = {
-    provider_id: form.provider_id.value,
+    provider_id: Number(form.provider_id.value),
     rating: Number(form.rating.value),
     comments: form.comments.value.trim()
   };
 
-  // 4. For now, just show the data in the browser console
-  console.log("Survey response:", surveyResponse);
+  const { error } = await db.from("responses").insert(surveyResponse);
 
-  // 5. Tell the patient it worked, then clear the form
-  message.textContent = "Thank you! Your feedback was submitted.";
-  form.reset();
+  if (error) {
+    console.error(error);
+    message.textContent = "Sorry, something went wrong. Please try again.";
+  } else {
+    message.textContent = "Thank you! Your feedback was submitted.";
+    form.reset();
+  }
+
+  submitButton.disabled = false;
 });
